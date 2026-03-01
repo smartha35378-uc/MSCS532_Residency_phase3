@@ -68,4 +68,4 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Path to the read-only CSV dataset used to seed the in-memory Treap.
-INVENTORY_DATASET_CSV = os.path.join(BASE_DIR, "data", "inventory_dataset.csv")
+INVENTORY_DATASET_CSV = os.path.join(BASE_DIR, "data", "inventory_100k.csv")
