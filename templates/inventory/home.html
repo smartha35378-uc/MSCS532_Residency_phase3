@@ -1,0 +1,24 @@
+{% extends "inventory/base.html" %}
+{% block title %}Home · Inventory Treap PoC{% endblock %}
+{% block content %}
+  <div class="grid" style="margin-top:16px;">
+    <div class="card">
+      <h2 style="margin-top:0;">What this PoC demonstrates</h2>
+      <ul>
+        <li><b>Treap</b> data structure (BST by SKU + heap by random priority) for expected <b>O(log n)</b> insert/search/delete.</li>
+        <li>Inventory operations: add/upsert, search, sorted listing, range query, quantity updates, deletion.</li>
+        <li>Two interfaces: <b>web UI</b> (this page) and a <b>CLI</b> (management command).</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2 style="margin-top:0;">Quick links</h2>
+      <ul>
+        <li><a href="{% url 'ui_items' %}">View all items (inorder)</a></li>
+        <li><a href="{% url 'ui_add' %}">Add / Upsert item</a></li>
+        <li><a href="{% url 'ui_range' %}">Range query by SKU</a></li>
+      </ul>
+      <h3>CLI</h3>
+      <div>Run: <code>python manage.py inventory_cli</code></div>
+    </div>
+  </div>
+{% endblock %}

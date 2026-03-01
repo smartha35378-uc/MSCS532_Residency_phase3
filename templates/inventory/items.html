@@ -1,0 +1,64 @@
+{% extends "inventory/base.html" %}
+{% block title %}Items · Inventory Treap PoC{% endblock %}
+{% block content %}
+  <div class="card" style="margin-top:16px;">
+    <h2 style="margin-top:0;">All items (sorted by SKU)</h2>
+
+    <form method="get" action="{% url 'ui_items' %}" class="row" style="margin-top:10px;">
+      <div style="flex:1; min-width:240px;">
+        <label>Search by SKU</label>
+        <input type="text" name="sku" value="{{ sku|default:'' }}" placeholder="e.g., A1001">
+      </div>
+      <div style="align-self:end;">
+        <button type="submit">Search</button>
+      </div>
+      <div style="align-self:end;">
+        <a href="{% url 'ui_items' %}">Clear</a>
+      </div>
+    </form>
+
+    {% if searched %}
+      {% if item %}
+        <h3>Result</h3>
+        <table>
+          <thead><tr><th>SKU</th><th>Name</th><th>Qty</th><th>Price</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>{{ item.sku }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>${{ item.price }}</td>
+              <td>
+                <a href="{% url 'ui_detail' item.sku %}">View</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      {% else %}
+        <div style="margin-top:12px;">No item found for SKU: <code>{{ sku }}</code></div>
+      {% endif %}
+      <hr style="margin:18px 0;">
+    {% endif %}
+
+    <table>
+      <thead>
+        <tr><th>SKU</th><th>Name</th><th>Qty</th><th>Price</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        {% for it in items %}
+          <tr>
+            <td>{{ it.sku }}</td>
+            <td>{{ it.name }}</td>
+            <td>{{ it.quantity }}</td>
+            <td>${{ it.price }}</td>
+            <td>
+              <a href="{% url 'ui_detail' it.sku %}">View</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="5">No items loaded.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

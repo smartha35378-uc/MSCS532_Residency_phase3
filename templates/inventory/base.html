@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Inventory Treap PoC{% endblock %}</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
+    .container { max-width: 980px; margin: 0 auto; }
+    header { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+    nav a { margin-right: 12px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 12px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background: #f5f5f5; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .card { border: 1px solid #ddd; border-radius: 10px; padding: 14px; }
+    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    input[type=text], input[type=number] { padding: 8px; width: 100%; box-sizing: border-box; }
+    label { display: block; font-size: 0.9rem; margin-bottom: 6px; }
+    button { padding: 8px 12px; cursor: pointer; }
+    .msg { padding: 10px 12px; border-radius: 8px; margin: 12px 0; }
+    .ok { background: #eefbf0; border: 1px solid #bfe6c6; }
+    .err { background: #fff2f2; border: 1px solid #f0b7b7; }
+    code { background: #f5f5f5; padding: 2px 6px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1 style="margin:0;">Inventory Treap PoC</h1>
+        <div style="color:#555;">Django UI + CLI demo (in-memory Treap seeded from read-only CSV)</div>
+      </div>
+      <nav>
+        <a href="{% url 'ui_home' %}">Home</a>
+        <a href="{% url 'ui_items' %}">Items</a>
+        <a href="{% url 'ui_add' %}">Add/Upsert</a>
+        <a href="{% url 'ui_range' %}">Range Query</a>
+      </nav>
+    </header>
+
+    {% if message %}
+      <div class="msg {% if message_type == 'ok' %}ok{% else %}err{% endif %}">
+        {{ message }}
+      </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+
+    <footer style="margin-top:28px;color:#666;font-size:0.9rem;">
+      Dataset: <code>data/inventory_dataset.csv</code> (read-only; loaded at startup).
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{% extends "inventory/base.html" %}
+{% block title %}{{ item.sku }} · Inventory Treap PoC{% endblock %}
+{% block content %}
+  <div class="grid" style="margin-top:16px;">
+    <div class="card">
+      <h2 style="margin-top:0;">Item: {{ item.sku }}</h2>
+      <div><b>Name:</b> {{ item.name }}</div>
+      <div><b>Quantity:</b> {{ item.quantity }}</div>
+      <div><b>Price:</b> ${{ item.price }}</div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0;">Update quantity</h2>
+      <form method="post" action="{% url 'ui_update_qty' item.sku %}">
+        {% csrf_token %}
+        <label>Delta (can be negative)</label>
+        <input type="number" name="delta" value="0">
+        <div class="row" style="margin-top:10px;">
+          <button type="submit">Apply</button>
+          <a href="{% url 'ui_items' %}">Back</a>
+        </div>
+      </form>
+
+      <hr style="margin:16px 0;">
+
+      <h2 style="margin-top:0;">Delete item</h2>
+      <form method="post" action="{% url 'ui_delete' item.sku %}">
+        {% csrf_token %}
+        <button type="submit" onclick="return confirm('Delete {{ item.sku }}?');">Delete</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

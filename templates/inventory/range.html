@@ -1,0 +1,34 @@
+{% extends "inventory/base.html" %}
+{% block title %}Range Query · Inventory Treap PoC{% endblock %}
+{% block content %}
+  <div class="card" style="margin-top:16px;">
+    <h2 style="margin-top:0;">Range Query (by SKU)</h2>
+    <form method="get" action="{% url 'ui_range' %}" class="row">
+      <div style="flex:1; min-width:220px;">
+        <label>Low SKU</label>
+        <input type="text" name="low" value="{{ low|default:'' }}" placeholder="e.g., A1000">
+      </div>
+      <div style="flex:1; min-width:220px;">
+        <label>High SKU</label>
+        <input type="text" name="high" value="{{ high|default:'' }}" placeholder="e.g., C3999">
+      </div>
+      <div style="align-self:end;">
+        <button type="submit">Run</button>
+      </div>
+    </form>
+
+    {% if ran %}
+      <h3 style="margin-top:14px;">Results</h3>
+      <table>
+        <thead><tr><th>SKU</th><th>Name</th><th>Qty</th><th>Price</th></tr></thead>
+        <tbody>
+          {% for it in items %}
+            <tr><td>{{ it.sku }}</td><td>{{ it.name }}</td><td>{{ it.quantity }}</td><td>${{ it.price }}</td></tr>
+          {% empty %}
+            <tr><td colspan="4">No items found in that range.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+  </div>
+{% endblock %}
